@@ -1,0 +1,112 @@
+.profile{
+    padding-top: 25px;
+    font-weight: bold;
+}
+.boy{
+    display: flex;
+    width: 100px;
+    height: 100px;
+   left: 20px;
+   border-radius: 50%;
+  object-fit: cover;
+
+}
+.username{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.username-box {
+  margin-bottom: 2rem;
+  margin-left: 5px;
+  margin-top: 30px;
+}
+
+.username-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ccc;
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem 1rem;
+  width: 10rem;
+  cursor: pointer;
+  text-align: left;
+  color: black;
+}
+
+.username-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.username-label {
+  font-size: 15px;
+  color: #444;
+}
+
+.username-text {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.edit-icon {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Mode edit */
+.edit-username {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.edit-username input {
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+   width: 150px;
+}
+
+.save-btn {
+  background-color: #4ade80;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  width: 150px;
+}
+
+.profile-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  padding-top: 50px;
+  margin-top: 1rem;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.profile-btn {
+  background-color: #ccc;
+  border: none;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 1rem 1rem;
+  text-align: left;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+

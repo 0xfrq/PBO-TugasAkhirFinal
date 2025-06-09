@@ -1,0 +1,181 @@
+.page-wrapper {
+    display: flex;
+    justify-content: center;  /* center horizontal */
+    align-items: center;      /* center vertical */
+    height: 100vh;
+    background-color: #000000;
+}
+.container {
+  width: 100%;
+  position: relative;
+  max-width: 375px;
+  padding: 20px;
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 0 20px ;
+  align-items: center;
+  height: 100%;
+}
+.Text{
+    padding-top: 20px;
+    text-align: center;
+}
+h1{
+    font-size: xx-large;
+}
+.summary-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 30px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  flex: 1;
+  background-color: #1a1a1a;
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.summary-box:hover {
+  background-color: #333;
+}
+
+.label {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 5px;
+}
+
+
+.red {
+  color: #ff4d4f;
+}
+
+.green {
+  color: #4ade80;
+}
+
+.add-button {
+  display: block;
+  text-align: center;
+  background-color: #89e3aa;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin-top: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  width: 100%;
+  max-width: 250px;
+}
+
+.add-button:hover {
+  opacity: 0.85;
+}
+
+
+.mobile-navbar {
+    width: 100%;
+  background-color: #252525; /* atau #000 juga oke */
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  padding-bottom: 0;
+  border-radius: 0 0 10px 10px; 
+}
+
+.nav-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out; 
+}
+.nav-button:hover {
+  opacity: 0.8;
+}
+.nav-button:first-child:hover {
+  background-color: rgb(50, 96, 99);
+}
+.nav-button:last-child:hover {
+  background-color: rgb(50, 96, 99);
+}
+.nav-button:nth-child(2):hover {
+  background-color: rgb(50, 96, 99);
+}
+.nav-button:nth-child(3):hover {
+  background-color: rgb(50, 96, 99);
+}
+
+.nav-icon {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+.text-nav{
+    color:rgb(119, 167, 183);
+}
+.category-list {
+  width: 100%;
+}
+.category-card {
+  background-color: #949494; /* default bg kalau getCategoryColor ga ada */
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+.category-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-description {
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+}
+
+.category-total {
+  font-weight: bold;
+}
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Tambahkan agar tombolnya konsisten dan responsif */
+.add-button {
+  flex: 1;
+  background-color: #acd1bd;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+}
+
+.add-button.clear {
+  background-color: #e98282;
+  color: rgb(0, 0, 0);
+}

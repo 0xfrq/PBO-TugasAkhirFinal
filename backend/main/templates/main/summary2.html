@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Enhanced Transaction Summary</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">Today's Summary</h4>
+                </div>
+                <div class="card-body">
+                    {% if ringkasan_hari_ini %}
+                        <p><strong>Total Income:</strong> Rp {{ ringkasan_hari_ini.pemasukan|floatformat:0 }}</p>
+                        <p><strong>Total Expense:</strong> Rp {{ ringkasan_hari_ini.pengeluaran|floatformat:0 }}</p>
+                        <p><strong>Net:</strong> Rp {{ ringkasan_hari_ini.net|floatformat:0 }}</p>
+                    {% else %}
+                        <p class="text-muted">No data for today.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

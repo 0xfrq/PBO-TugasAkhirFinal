@@ -1,0 +1,112 @@
+.page-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+}
+
+.container {
+    width: 100%;
+    max-width: 375px;
+    padding: 20px;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    color: white;
+    position: relative;
+}
+.text{  
+  margin-top: 60px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+h1{
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+p{
+ font-size: 14px;
+  color: #aaa;
+}
+.panah{
+  position: absolute;
+  width: 27px;
+  left: 16px;
+  top: 40px;
+  z-index: 10;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+.form {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+.input,
+.input-password {
+    width: 100%;
+    padding: 12px 45px 12px 45px;
+    font-size: 16px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    color: white;
+    background-color: transparent;
+    box-sizing: border-box;
+}
+.icon {
+    position: absolute;
+    margin-left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none;
+
+}
+
+.input::placeholder {
+  color: white;
+  opacity: 1; /* pastikan tidak transparan */
+}
+.input-password::placeholder {
+  color: white;
+  opacity: 1; /* pastikan tidak transparan */
+}
+.submit-button{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.submit {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px;
+    border: 1px solid white;
+    border-radius: 30px;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: all 0.3s ease;
+}
+.toggle-button {
+    position: absolute;
+    top: 40%;
+    left: 230px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.icon-img {
+    width: 22px;
+    height: 22px;
+     display: block;
+}
+
