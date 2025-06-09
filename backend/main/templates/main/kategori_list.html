@@ -1,48 +1,166 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-    <h1>Category List</h1>
+<style>
+/* Base styling for the grid container */
+.category-grid {
+    display: grid;
+    /* This will create two columns, each taking up equal space */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; /* Space between cards */
+    padding: 20px 0;
+}
+
+/* Styling for individual category cards */
+.category-card {
+    background-color: #ffffff; /* White background */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Soft shadow */
+    padding: 20px;
+    display: flex; /* Use flexbox for icon and content alignment */
+    align-items: center; /* Vertically align items */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    min-height: 100px; /* Ensure consistent card height */
+}
+
+.category-card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Icon styling */
+.card-icon {
+    font-size: 3rem; /* Larger icon size */
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    /* You can add a light background to the icon if you like, e.g.: */
+    /* background-color: #f0f0f0; */
+}
+
+/* Content area for name and actions */
+.card-content {
+    flex-grow: 1; /* Allow content to take available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-name {
+    font-size: 1.25rem; /* Larger font size for name */
+    font-weight: 600; /* Semi-bold */
+    color: #333; /* Darker text color */
+    margin-bottom: 8px; /* Space between name and actions */
+}
+
+/* Styling for the actions (Edit/Delete buttons) */
+.card-actions .btn {
+    margin-right: 8px; /* Space between buttons */
+}
+
+.card-actions .d-inline {
+    display: inline-block !important; /* Ensure form is inline */
+}
+
+/* NEW: Styles to make the grid take up half the screen */
+.half-width-container {
+    width: 50%; /* Make the container half the width of its parent (the .container) */
+    margin: 0 auto; /* Center the container */
+    /* Add padding if needed to prevent content from touching edges */
+    padding: 0 15px; /* Example padding */
+}
+
+/* Media queries for smaller screens - crucial for responsiveness */
+@media (max-width: 992px) { /* Adjust breakpoint as needed for when 2 columns become too cramped */
+    .half-width-container {
+        width: 75%; /* On medium screens, maybe take up more space */
+    }
+}
+
+@media (max-width: 768px) {
+    .half-width-container {
+        width: 90%; /* On tablets, take up almost full width */
+    }
+    .category-grid {
+        grid-template-columns: 1fr; /* On smaller screens, switch to a single column */
+    }
+    .card-icon {
+        font-size: 2.5rem;
+        margin-right: 15px;
+    }
+    .card-name {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .half-width-container {
+        width: 100%; /* On very small screens, take up full width */
+        padding: 0 10px; /* Less padding on very small screens */
+    }
+    .category-card {
+        padding: 15px;
+    }
+    .card-icon {
+        font-size: 2rem;
+        margin-right: 10px;
+    }
+    .card-name {
+        font-size: 1rem;
+    }
+}
+
+</style>
+<div class="container mt-4">
+      <div class="mt-4"> 
+          <h4>Overall Balance</h4>
+    <div class="balance-display">{{ saldo_akhir|default:0 }}</div>
+
+    <div class="d-flex justify-content-center gap-4 card-section">
+      <div class="bg-light text-dark card-custom">
+        <div>Expenses</div>
+        <div class="text-expense fw-bold">{{ pengeluaran|default:0 }}</div>
+      </div>
+      <div class="bg-light text-dark card-custom">
+        <div>Income</div>
+        <div class="text-income fw-bold">{{ pemasukan|default:0 }}</div>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <h3>Category List</h3>
+        <a href="{% url 'kategori_create' %}" class="btn btn-primary"><i class="bi bi-plus"></i></a>
+    </div>
+    
 
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            <div class="alert alert-{{ message.tags }}">{{ message }} </div>
         {% endfor %}
     {% endif %}
 
-    <a href="{% url 'kategori_create' %}" class="btn btn-primary mb-3">Create New Category</a>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Icon</th>
-                <th>Color</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for kategori in categories %}
-                <tr>
-                    <td>{{ kategori.id }}</td>
-                    <td>{{ kategori.nama }}</td>
-                    <td><i class="{{ kategori.getIkon }}" style="color: {{ kategori.getWarna }}"></i></td>
-                    <td><span style="color: {{ kategori.getWarna }}">{{ kategori.getWarna }}</span></td>
-                    <td>
-                    {% if kategori.id %}
-                        <form method="post" action="{% url 'kategori_delete' kategori.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    {% else %}
-                        <button class="btn btn-danger btn-sm" disabled>Invalid ID</button>
-                    {% endif %}
-                    </td>
-                </tr>
-            {% empty %}
-                <tr><td colspan="5">No categories found.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+    <div class="half-width-container mt-4"> 
+            <div class="category-grid">
+                {% for kategori in categories %}
+                <div class="category-card p-2 rounded mb-2" style="border: 3px solid {{ kategori.getWarna }}; background-color: #E0E0E0;">
+                      <div class="card-icon mb-2">
+                          <i class="{{ kategori.getIkon }}" style="color: {{ kategori.getWarna }}"></i>
+                      </div>
+                      <div class="card-content d-flex">
+                          <div class="card-name fw-bold" style="color: {{ kategori.getWarna }}">{{ kategori.nama }}</div>
+                          <form method="post" action="{% url 'kategori_delete' kategori.id %}" class="ms-2">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                          </form>
+                      </div>
+                  </div>
+
+                {% empty %}
+                    <p>No categories found.</p>
+                {% endfor %}
+            </div>
 </div>
 {% endblock %}

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+
 {% block content %}
-<div class="container">
-    <h1>Create New Category</h1>
+<div class="container py-4">
+    <h1 class="mb-4">Create New Category</h1>
 
     {% if messages %}
         {% for message in messages %}
@@ -13,11 +14,13 @@
         {% csrf_token %}
         <input type="hidden" name="id" id="id" value="{{ random_id }}">
 
+        <!-- Name Field -->
         <div class="mb-3">
             <label for="nama" class="form-label">Name</label>
             <input type="text" name="nama" id="nama" class="form-control" required value="{{ nama|default:'' }}">
         </div>
 
+        <!-- Icon Picker Field -->
         <div class="mb-3">
             <label for="ikon" class="form-label">Icon</label>
             <div class="input-group">
@@ -26,42 +29,48 @@
                     Pick Icon
                 </button>
             </div>
-            <small class="form-text text-muted">
+            <small class="form-text" style="color: white;">
                 Preview: <i id="iconPreview" class="{{ ikon|default:'fa-solid fa-money-bill-transfer' }}"></i>
             </small>
         </div>
 
+        <!-- Color Picker -->
         <div class="mb-3">
             <label for="warna" class="form-label">Color (Hex code)</label>
-            <input type="color" name="warna" id="warna" class="form-control form-control-color" value="{{ warna|default:'#000000' }}">
+            <input type="color" name="warna" id="warna" class="form-control form-control-color" style="width: 60px; height: 60px;"
+                   value="{{ warna|default:'#ffffff' }}">
         </div>
 
-        <button type="submit" class="btn btn-success">Create</button>
-        <a href="{% url 'kategori_list' %}" class="btn btn-secondary">Back</a>
+        <!-- Buttons -->
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">Create</button>
+            <a href="{% url 'kategori_list' %}" class="btn btn-secondary">Back</a>
+        </div>
     </form>
 </div>
 
+<!-- Modal: Icon Picker -->
 <div class="modal fade" id="iconPickerModal" tabindex="-1" aria-labelledby="iconPickerLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="iconPickerLabel">Select an Icon</h5>
-
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="d-flex flex-wrap gap-2">
-          {% for icon in ikon_list %}
-              <button type="button" class="btn btn-light border icon-select" data-icon="{{ icon }}">
-                  <i class="{{ icon }}"></i>
-              </button>
-          {% endfor %}
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="iconPickerLabel">Select an Icon</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-wrap gap-2">
+                    {% for icon in ikon_list %}
+                        <button type="button" class="btn btn-outline-secondary icon-select" data-icon="{{ icon }}">
+                            <i class="{{ icon }}"></i>
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
+<!-- Script -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const iconInput = document.getElementById("ikon");
@@ -73,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     updateIconColor();
+
     document.querySelectorAll(".icon-select").forEach(button => {
         button.addEventListener("click", function () {
             const selectedIcon = this.getAttribute("data-icon");
@@ -80,7 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
             iconPreview.className = selectedIcon;
             updateIconColor();
 
-            const modal = bootstrap.Modal.getInstance(document.getElementById("iconPickerModal"));
+            const modalElement = document.getElementById("iconPickerModal");
+            const modal = bootstrap.Modal.getInstance(modalElement);
             if (modal) modal.hide();
         });
     });

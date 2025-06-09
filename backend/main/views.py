@@ -36,16 +36,35 @@ def show_main(request):
     return render(request, 'main/dashboard.html', context)
 
 def kategori_list(request):
+    pemasukan_total = PengelolaTransaksi.hitungTotalBerdasarkanTipe(
+        TipeTransaksi.PEMASUKAN
+    )
+    pengeluaran_total = PengelolaTransaksi.hitungTotalBerdasarkanTipe(
+        TipeTransaksi.PENGELUARAN
+    )
+    saldo_akhir = pemasukan_total - pengeluaran_total
     """Display all categories"""
     categories = PengelolaKategori.ambilSemuaKategori()
-    return render(request, 'main/kategori_list.html', {'categories': categories})
+    return render(request, 'main/kategori_list.html', 
+                  {'categories': categories,
+                   'pemasukan' : rp(pemasukan_total),
+                   'pengeluaran' : rp(pengeluaran_total),
+                   'saldo_akhir' : rp(saldo_akhir),
+                   })
 
 def kategori_create(request):
     ikon_list = [
-        'fa-solid fa-money-bill-transfer', 'fa-solid fa-car', 'fa-solid fa-house',
-        'fa-solid fa-utensils', 'fa-solid fa-heart', 'fa-solid fa-book',
-        'fa-solid fa-gift', 'fa-solid fa-bolt', 'fa-solid fa-bus', 'fa-solid fa-music'
-    ]
+            'fa-solid fa-sack-dollar',       # Income / Salary
+            'fa-solid fa-wallet',            # General expenses
+            'fa-solid fa-cart-shopping',     # Shopping
+            'fa-solid fa-receipt',           # Bills / Payments
+            'fa-solid fa-hand-holding-dollar',  # Donations / Charity
+            'fa-solid fa-piggy-bank',        # Savings
+            'fa-solid fa-briefcase',         # Business Income / Work
+            'fa-solid fa-coins',             # Investments / Earnings
+            'fa-solid fa-credit-card',       # Credit / Debt payment
+            'fa-solid fa-building-columns'   # Taxes / Government payments
+        ]
 
     if request.method == 'POST':
         id = request.POST.get('id')

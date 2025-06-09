@@ -49,7 +49,7 @@ class Kategori(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     nama = models.CharField(max_length=100)
     ikon = models.CharField(max_length=50, blank=True, null=True)
-    warna = models.CharField(max_length=7, blank=True, null=True)  # Hex color code
+    warna = models.CharField(max_length=7, blank=True, null=True)  
 
     def getNama(self):
         return self.nama
@@ -133,28 +133,23 @@ class Transaksi(models.Model):
                 raise ValidationError(f"Saldo tidak mencukupi. Saldo saat ini: {self.user.getSaldo()}")
 
     def save(self, *args, **kwargs):
-        # Check if this is a new transaction or an update
         is_new = self.pk is None
         old_amount = None
         old_type = None
         
         if not is_new:
-            # Get the old values before updating
             old_transaksi = Transaksi.objects.get(pk=self.pk)
             old_amount = old_transaksi.jumlah
             old_type = old_transaksi.tipe
         
-        # Validate the transaction
         self.full_clean()
         
-        # If updating an existing transaction, reverse the old transaction effect
         if not is_new:
             if old_type == TipeTransaksi.PEMASUKAN:
                 self.user.kurangiSaldo(old_amount)
             elif old_type == TipeTransaksi.PENGELUARAN:
                 self.user.tambahSaldo(old_amount)
         
-        # Apply the new transaction effect
         if self.tipe == TipeTransaksi.PEMASUKAN:
             self.user.tambahSaldo(self.jumlah)
         elif self.tipe == TipeTransaksi.PENGELUARAN:
@@ -165,7 +160,6 @@ class Transaksi(models.Model):
 
     def delete(self, *args, **kwargs):
         """Override delete to update user balance"""
-        # Reverse the transaction effect when deleting
         if self.tipe == TipeTransaksi.PEMASUKAN:
             self.user.kurangiSaldo(self.jumlah)
         elif self.tipe == TipeTransaksi.PENGELUARAN:
@@ -328,7 +322,6 @@ class PengelolaSaldo:
             raise ValidationError("Saldo pengirim tidak mencukupi")
         
         try:
-            # Create expense transaction for sender
             transaksi_keluar = TransaksiPengeluaran(
                 id=f"TRF_OUT_{user_pengirim.id}_{date.today().strftime('%Y%m%d')}_{int(jumlah * 100)}",
                 jumlah=jumlah,
@@ -339,7 +332,6 @@ class PengelolaSaldo:
             )
             transaksi_keluar.save()
             
-            # Create income transaction for receiver
             transaksi_masuk = TransaksiPemasukan(
                 id=f"TRF_IN_{user_penerima.id}_{date.today().strftime('%Y%m%d')}_{int(jumlah * 100)}",
                 jumlah=jumlah,
@@ -354,7 +346,6 @@ class PengelolaSaldo:
         except ValidationError as e:
             raise e
 
-# 1. ABSTRACT CLASS
 class AbstractRingkasan(ABC):
     """Abstract base class untuk semua jenis ringkasan"""
 
@@ -373,7 +364,6 @@ class AbstractRingkasan(ABC):
         print(f"{self.__class__.__name__} dihapus dari memori")
         gc.collect()
 
-# 2. IMPLEMENTASI POLIMORFIS
 class RingkasanTanggal(AbstractRingkasan):
     def __init__(self, tanggal):
         self.tanggal = tanggal
@@ -411,7 +401,6 @@ class RingkasanKategori(AbstractRingkasan):
     def generate_ringkasan(self):
         return f"Total transaksi untuk kategori '{self.kategori}': {self.hitung_total()}"
 
-# 3. SERVICE CLASS MENGGUNAKAN POLIMORFISME
 class LayananRingkasan:
     """Service class dengan dukungan abstract, polimorfisme, dan destructor"""
 
